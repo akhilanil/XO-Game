@@ -189,6 +189,11 @@
 
 
 }
+.button:active{
+	box-shadow: 0 3px 0 #d11717;
+  top: 3px;
+  
+}
 .highlight{
 
 	cursor: pointer;
@@ -208,7 +213,27 @@
 	left:50px;
 }
 
+#undo{
+
+	top: 90px;
+	left:50px;
+}
 .effect{
 
 	background-color: #3C78AE;
+}
+
+.sleep{
+
+	-webkit-touch-callout: none; 
+  -webkit-user-select: none;   
+  -moz-user-select: none;      
+  -ms-user-select: none;       
+  cursor: default;
+        pointer-events: none;
+
+        
+        color: #c0c0c0;
+        background-color: #ffffff;
+
 }
