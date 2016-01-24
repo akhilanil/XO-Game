@@ -1,20 +1,25 @@
 $(document).ready(function(){
 var countx=0;
 var county=0;
-var b0=false;
-var b1=false;
-var b2=false;
-var b3=false;
-var b4=false;
-var b5=false;
-var b6=false;
-var b7=false;
-var b8=false;
 var start=false;
+var terminate=false;
 var flag=0;
 var count=true;
+var b=[];
 var button=document.getElementsByClassName("column");
 var x=document.getElementById("result");
+var stack=[];
+var xoro=[];
+var top=-1;
+
+for(var i=0; i<9; i++){
+	b[i]=false;
+}
+
+if(top===-1){
+
+	$("#undo").addClass("sleep");
+}
 
 $(".button").hover(function(){
 	
@@ -25,23 +30,43 @@ $("#go").click(function(){
 
 		if($("#input1").val()==="" || $("#input2").val()==="")
 			alert("Please Enter Player Names..!!")
-		else
+		else{
 			start=true;
+		}
 });
+
+$("#undo").click(function(){
+	if(top>-1 && !terminate){
+
+		var a=stack[top];
+		b[a]=false;
+		if(xoro[top]==="X"){
+			countx=countx-1;
+			count=true;
+		}
+		else{
+			county=county-1;
+			count=false;
+		}
+		var y="#b"+(a+1);
+		$(y).text("");
+		top--;
+		if(top===-1){
+			$("#undo").addClass("sleep");
+		}
+	}
+	
+});
+
+
 $("#reset").click(function(){
 
-	console.log("Clicked reset");
+	
 	countx=0;
 	county=0;
-	b0=false;
-	b1=false;	
-	b2=false;
-	b3=false;
-	b4=false;
-	b5=false;
-	b6=false;
-	b7=false;
-	b8=false;
+	for(var i=0; i<9; i++){
+		b[i]=false;
+	}
 	start=false;
 	flag=0;
 	count=true;
@@ -51,23 +76,30 @@ $("#reset").click(function(){
 	$("#input1").val("");
 	$("#input2").val("");
 	x.innerHTML="";
+	top=-1;
+	terminate=false;
+	$("#undo").addClass("sleep");
 		
 });
 
 
 $("#b1").click(function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b0){
-		b0=true;
+	else if(!b[0]){
+		b[0]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(500);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(0,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="X";
 		}
 		else{
 			$(this).text("O");
@@ -75,10 +107,14 @@ $("#b1").click(function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(0,"O"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
+		
+		stack[top]=0;
 		
 	}
 
@@ -86,17 +122,21 @@ $("#b1").click(function(){
 
 button[1].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b1){
-			b1=true;
+	else if(!b[1]){
+		b[1]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(1,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="X";
 		}
 		else{
 			$(this).text("O");
@@ -104,10 +144,14 @@ button[1].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(1,"O"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
+		
+		stack[top]=1;
 		
 	}
 
@@ -115,17 +159,21 @@ button[1].onclick=function(){
 
 button[2].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b2){
-		b2=true;
+	else if(!b[2]){
+		b[2]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(2,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="X";
 		}
 		else{
 			$(this).text("O");
@@ -133,28 +181,35 @@ button[2].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(2,"O"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
 		
+		stack[top]=2;
 	}
 
 }
 
 button[3].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b3){
-		b3=true;
+	else if(!b[3]){
+		b[3]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(3,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="X";
 		}
 		else{
 			$(this).text("O");
@@ -162,10 +217,13 @@ button[3].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(3,"O"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
+		stack[top]=3;
 		
 	}
 
@@ -173,17 +231,22 @@ button[3].onclick=function(){
 
 button[4].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b4){
-		b4=true;
+	else if(!b[4]){
+		b[4]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(4,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="X";
+
 		}
 		else{
 			$(this).text("O");
@@ -191,10 +254,13 @@ button[4].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(4,"O"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
+		stack[top]=4;
 		
 	}
 
@@ -202,17 +268,21 @@ button[4].onclick=function(){
 
 button[5].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b5){
-		b5=true;
+	else if(!b[5]){
+		b[5]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(5,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="X";
 		}
 		else{
 			$(this).text("O");
@@ -220,28 +290,34 @@ button[5].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(5,"O"))
-				checkDraw();
+					checkDraw();
+			}	
+			xoro[top]="O";		
 		}
-		b5=true;
+		stack[top]=5;
 	}
 
 }
 
 button[6].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b6){
-		b6=true;
+	else if(!b[6]){
+		b[6]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(6,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="X";
 		}
 		else{
 			$(this).text("O");
@@ -249,11 +325,13 @@ button[6].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(6,"O"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
-		
+		stack[top]=6;
 
 	}
 
@@ -261,17 +339,21 @@ button[6].onclick=function(){
 
 button[7].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b7){
-			b7=true;
+	else if(!b[7]){
+			b[7]=true;
+			if(top===-1){$("#undo").removeClass("sleep");}
+			top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(7,"X"))
-				checkDraw();
+					checkDraw();
+			}
+			xoro[top]=="X";
 		}
 		else{
 			$(this).text("O");
@@ -279,28 +361,34 @@ button[7].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(7,"O"))
-				checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
-		
+		stack[top]=7;
 	}
 
 }
 
 button[8].onclick=function(){
 	if(!start){alert("Enter Names And Click Go..!!!")}
-	else if(!b8){
-		b8=true;
+	else if(!b[8]){
+		b[8]=true;
+		if(top===-1){$("#undo").removeClass("sleep");}
+		top=top+1;
 		if(count){
 			$(this).text("X");
 			$(this).hide();
 			$(this).fadeIn(1000);
 			count=false;
 			countx++;
-			if(countx>=3)
+			if(countx>=3){
 				if(!validate(8,"X"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]=="X";
 		}
 		else{
 			$(this).text("O");
@@ -308,10 +396,13 @@ button[8].onclick=function(){
 			$(this).fadeIn(1000);
 			count=true;
 			county++;
-			if(county>=3)
+			if(county>=3){
 				if(!validate(8,"O"))
-			checkDraw();
+					checkDraw();
+			}
+			xoro[top]="O";
 		}
+		stack[top]=8;
 		
 	}
 
@@ -498,15 +589,11 @@ var stop= function(ch,p1,p2,p3){
 	if(ch==="X"){ch=$("#input1").val()}
 	else{ch=$("#input2").val()}
 	
-	b0=true;
-	b1=true;
-	b2=true;
-	b3=true;
-	b4=true;
-	b5=true;
-	b6=true;
-	b7=true;
-	b8=true;
+
+	for(var i=0; i<9; i++){
+		b[i]=true;
+	}
+	
 	var rslt=ch+" WINS.....!!!";
 	var y="#b"+(p1+1);
 	var z="#b"+(p2+1);
@@ -524,15 +611,28 @@ var stop= function(ch,p1,p2,p3){
 
 	setTimeout(function(){$(x).text(rslt)},1000);	
 	//x.innerHTML=ch+" WINS.....!!!";
-
+	terminate=true;
+	$("#undo").addClass("sleep");
 	
 }
 
-var check=function(){console.log("HEY")}
+
 
 var checkDraw= function(){
+	var verify=0;
+	for(var i=0; i<9; i++){
+		if(!b[i]){verify=1}
+			
+	}
+	if(verify!=1){
+			x.innerHTML="Draw.....!!";
+			terminate=true;
+			$("#undo").addClass("sleep");
+		}
 
-	if(b0===true && b1===true && b2===true && b3===true && b4===true && b5===true && b6===true && b7===true && b8===true)	
-		x.innerHTML="Draw.....!!";
 }
+	
 });
+
+
+
